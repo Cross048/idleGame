@@ -1,3 +1,5 @@
+import os
+
 import pygame
 import sys
 
@@ -11,6 +13,18 @@ GRAY = (200, 200, 200)
 
 # Definición de dimensiones de la pantalla
 WIDTH, HEIGHT = 800, 600
+
+# Obtener el tamaño de la pantalla del dispositivo
+screen_info = pygame.display.Info()
+
+# Calcular las coordenadas x e y para centrar la ventana
+x = (screen_info.current_w - WIDTH) // 2
+y = (screen_info.current_h - HEIGHT) // 2
+
+# Definir las coordenadas de la ventana centrada
+os.environ['SDL_VIDEO_WINDOW_POS'] = f"{x},{y}"
+
+# Definición de la ventana
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Idle Tycoon Empire")
 
@@ -35,7 +49,7 @@ class Business:
 def draw_text(text, font, color, surface, x, y):
     text_obj = font.render(text, True, color)
     text_rect = text_obj.get_rect()
-    text_rect.center = (x, y)
+    text_rect.topleft = (x, y)
     surface.blit(text_obj, text_rect)
 
 # Función principal del juego
